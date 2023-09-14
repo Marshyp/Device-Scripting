@@ -1,39 +1,29 @@
-Write-Host "----------- Calendar permissions utility -----------"
-Write-Host ""
-Write-Host "Signing in......"
+$folder= ':\calendar'
+
+Write-Host "----------- Calendar permissions utility -----------`n" -ForegroundColor DarkGray
+Write-Host "Signing in......`n" -ForegroundColor Red
 
 Connect-ExchangeOnline
 
-$folder= ':\calendar'
 cls
 
-Write-Host ""
-Write-Host "----------- Calendar permissions utility -----------"
-Write-Host ""
+Write-Host "----------- Calendar permissions utility -----------`n" -ForegroundColor DarkGray
 
-$source=read-host -prompt 'Please enter the email address of the source mailbox'
+$source= Read-Host -Prompt 'Please enter the email address of the source mailbox'
 
-Write-Host ""
 $Delegate = Read-Host -Prompt 'Please enter the email address of the delegate user'
 
-Write-Host ""
 $AccessRight = Read-Host -Prompt 'Please enter access rights required'
 
 $Bread = $source + $folder
 
 cls
-Write-Host ""
-Write-Host "----------- Calendar permissions utility -----------"
-write-host ""
-Write-Host "Getting reference data......"
+Write-Host "Getting reference data......`n"
 
 Add-MailboxFolderPermission -Identity $Bread -user $Delegate -AccessRights $AccessRight -SharingPermissionFlags Delegate,CanViewPrivateItems
 cls
 
-Write-Host ""
-Write-Host "----------- Calendar permissions utility -----------"
-write-host ""
-
+Write-Host "----------- Calendar permissions utility -----------`n"
 
 Get-MailboxFolderPermission $Bread | select FolderName,User,AccessRights | format-table -property FolderName,User,AccessRights
 Pause
